@@ -10,11 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-list.files("data")
+list.files("data/")
 ```
 
 ```{r}
 library(tidyverse)
+library(lubridate)
 ```
 
 ```{r}
@@ -27,5 +28,23 @@ baltimore <- homicide %>%
   filter(city == "Baltimore")
 
 unique(baltimore$city) #confirm only Baltimore included in new dataframe
+```
+
+```{r}
+baltimore <- baltimore %>%
+  rename(date = reported_date) %>%
+  mutate(date = ymd(date))
+
+class(baltimore$date)
+```
+
+```{r}
+baltimore_v2 <- baltimore %>%
+  mutate(month = month(date, label = T),
+         year = year(date)) %>%
+  group_by(year, month) %>%
+  summarise(monthly_homicide = n())
+
+baltimore_v2
 ```
 
