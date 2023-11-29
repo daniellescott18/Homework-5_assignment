@@ -22,4 +22,10 @@ homicide <- read_csv("data/homicide-data (1).csv")
 head(homicide)
 ```
 
+```{r}
+baltimore <- homicide %>%
+  filter(city == "Baltimore")
+
+unique(baltimore$city) #confirm only Baltimore included in new dataframe
+```
 
